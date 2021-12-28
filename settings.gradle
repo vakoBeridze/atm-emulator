@@ -1,0 +1,4 @@
+rootProject.name = 'atm-emulator'
+
+include 'atm-service'
+include 'bank-service'

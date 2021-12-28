@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+group 'ge.atm'
+version '1.0'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
+}
