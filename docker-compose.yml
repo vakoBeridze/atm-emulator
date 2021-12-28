@@ -1,0 +1,14 @@
+version: '3'
+services:
+  postgres-db:
+    build:
+      context: ./atm-db
+    image: atm-emulator-db
+    container_name: atm-emulator-db
+    volumes:
+      - /data/postgres_data_atm:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
