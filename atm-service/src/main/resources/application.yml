@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+
+spring:
+  #
+  #  datasource:
+  #    driverClassName: org.postgresql.Driver
+  #    url: ${DB_URL:jdbc:postgresql://localhost:5432/postgres}
+  #    username: ${DB_USER:postgres}
+  #    password: ${DB_PASSWORD:password}
+  #  jpa:
+  #    show-sql: true
+  #    properties:
+  #      hibernate:
+  #        format_sql: true
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/atm-emulator}
+    username: ${DB_USER:atm}
+    password: ${DB_PASSWORD:thisistoosimple}
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+jwt:
+  token:
+    secret: MySecretJWTMySecretJWTMySecretJWTMySecretJWTMySecretJWTMySecretJWTMySecretJWTMySecretJWTMySecretJWTMySecretJWTMySecretJWTMySecretJWT
+    expirationInSeconds: 10000
