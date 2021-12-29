@@ -1,6 +1,11 @@
 server:
   port: 8080
 
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+
 jwt:
   token:
     secret: MySecretJWTMySecretJWTMySecretJWTMySecretJWTMySecretJWTMySecretJWTMySecretJWTMySecretJWTMySecretJWTMySecretJWTMySecretJWTMySecretJWT
