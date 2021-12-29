@@ -1,4 +1,4 @@
-package ge.atm.atmservice.domain.dto;
+package ge.atm.atmservice.domain;
 
 import ge.atm.bankservice.domain.dto.CardDto;
 import lombok.AllArgsConstructor;

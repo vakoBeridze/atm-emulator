@@ -1,7 +1,7 @@
 package ge.atm.atmservice.service.impl;
 
-import ge.atm.atmservice.domain.dto.AuthenticationRequest;
-import ge.atm.atmservice.domain.dto.AuthenticationResponse;
+import ge.atm.atmservice.domain.AuthenticationRequest;
+import ge.atm.atmservice.domain.AuthenticationResponse;
 import ge.atm.atmservice.security.jwt.JwtCardDetails;
 import ge.atm.atmservice.security.jwt.JwtTokenProvider;
 import ge.atm.atmservice.service.AuthenticatedCardService;

@@ -33,8 +33,8 @@ public class BankAccountController {
 
     @ApiOperation(value = "Validate card secret for given card number")
     @PostMapping("/card/validate")
-    public ResponseEntity<Void> validateCardSecret(@ApiParam(name = "cardNumber", required = true) @RequestParam String cardNumber,
-                                                   @ApiParam(name = "secret", required = true) @RequestParam String secret,
+    public ResponseEntity<Void> validateCardSecret(@ApiParam(name = "cardNumber", required = true, example = "12345678") @RequestParam String cardNumber,
+                                                   @ApiParam(name = "secret", required = true, example = "1234") @RequestParam String secret,
                                                    @ApiParam(name = "preferredAuth", required = true) @RequestParam AuthenticationMethod preferredAuth) {
         bankAccountService.validateCardSecret(cardNumber, secret, preferredAuth);
         return ResponseEntity.ok().build();
@@ -42,23 +42,23 @@ public class BankAccountController {
 
     @ApiOperation(value = "Get current balance for given card number")
     @GetMapping("/card/balance")
-    public ResponseEntity<BigDecimal> getCardBalance(@ApiParam(name = "cardNumber", required = true) @RequestParam String cardNumber) {
+    public ResponseEntity<BigDecimal> getCardBalance(@ApiParam(name = "cardNumber", required = true, example = "12345678") @RequestParam String cardNumber) {
         final BigDecimal balance = bankAccountService.getCurrentBalance(cardNumber);
         return ResponseEntity.ok(balance);
     }
 
     @ApiOperation(value = "Deposit money for given card number")
     @PostMapping("/card/deposit")
-    public ResponseEntity<BigDecimal> depositCardBalance(@ApiParam(name = "cardNumber", required = true) @RequestParam String cardNumber,
-                                                         @ApiParam(name = "amount", required = true) @RequestParam BigDecimal amount) {
+    public ResponseEntity<BigDecimal> depositCardBalance(@ApiParam(name = "cardNumber", required = true, example = "12345678") @RequestParam String cardNumber,
+                                                         @ApiParam(name = "amount", required = true, example = "22.12") @RequestParam BigDecimal amount) {
         final BigDecimal balance = bankAccountService.depositCardBalance(cardNumber, amount);
         return ResponseEntity.ok(balance);
     }
 
     @ApiOperation(value = "Withdraw money for given card number")
     @PostMapping("/card/withdraw")
-    public ResponseEntity<BigDecimal> withdrawCardBalance(@ApiParam(name = "cardNumber", required = true) @RequestParam String cardNumber,
-                                                          @ApiParam(name = "amount", required = true) @RequestParam BigDecimal amount) {
+    public ResponseEntity<BigDecimal> withdrawCardBalance(@ApiParam(name = "cardNumber", required = true, example = "12345678") @RequestParam String cardNumber,
+                                                          @ApiParam(name = "amount", required = true, example = "11.2") @RequestParam BigDecimal amount) {
         final BigDecimal balance = bankAccountService.withdrawCardBalance(cardNumber, amount);
         return ResponseEntity.ok(balance);
     }

@@ -32,14 +32,14 @@ public class CardBalanceController {
 
     @ApiOperation(value = "Deposit money for authenticated card")
     @PostMapping("/deposit")
-    public ResponseEntity<BigDecimal> depositCardBalance(@ApiParam(name = "amount", required = true) @RequestParam BigDecimal amount) {
+    public ResponseEntity<BigDecimal> depositCardBalance(@ApiParam(name = "amount", required = true, example = "42.7") @RequestParam BigDecimal amount) {
         final BigDecimal balance = cardBalanceService.depositCardBalance(amount);
         return ResponseEntity.ok(balance);
     }
 
     @ApiOperation(value = "Withdraw money for authenticated card")
     @PostMapping("/withdraw")
-    public ResponseEntity<BigDecimal> withdrawCardBalance(@ApiParam(name = "amount", required = true) @RequestParam BigDecimal amount) {
+    public ResponseEntity<BigDecimal> withdrawCardBalance(@ApiParam(name = "amount", required = true, example = "17.02") @RequestParam BigDecimal amount) {
         final BigDecimal balance = cardBalanceService.withdrawCardBalance(amount);
         return ResponseEntity.ok(balance);
     }

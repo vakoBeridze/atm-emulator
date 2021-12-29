@@ -82,7 +82,8 @@
             "description": "cardNumber",
             "required": true,
             "type": "string",
-            "allowEmptyValue": false
+            "allowEmptyValue": false,
+            "x-example": "12345678"
           }
         ],
         "responses": {
@@ -130,7 +131,8 @@
             "description": "amount",
             "required": true,
             "type": "number",
-            "allowEmptyValue": false
+            "allowEmptyValue": false,
+            "x-example": 22.12
           },
           {
             "name": "cardNumber",
@@ -138,7 +140,8 @@
             "description": "cardNumber",
             "required": true,
             "type": "string",
-            "allowEmptyValue": false
+            "allowEmptyValue": false,
+            "x-example": "12345678"
           }
         ],
         "responses": {
@@ -189,7 +192,8 @@
             "description": "cardNumber",
             "required": true,
             "type": "string",
-            "allowEmptyValue": false
+            "allowEmptyValue": false,
+            "x-example": "12345678"
           },
           {
             "name": "preferredAuth",
@@ -209,7 +213,8 @@
             "description": "secret",
             "required": true,
             "type": "string",
-            "allowEmptyValue": false
+            "allowEmptyValue": false,
+            "x-example": "1234"
           }
         ],
         "responses": {
@@ -257,7 +262,8 @@
             "description": "amount",
             "required": true,
             "type": "number",
-            "allowEmptyValue": false
+            "allowEmptyValue": false,
+            "x-example": 11.2
           },
           {
             "name": "cardNumber",
@@ -265,7 +271,8 @@
             "description": "cardNumber",
             "required": true,
             "type": "string",
-            "allowEmptyValue": false
+            "allowEmptyValue": false,
+            "x-example": "12345678"
           }
         ],
         "responses": {

@@ -1,7 +1,7 @@
 package ge.atm.atmservice.api;
 
-import ge.atm.atmservice.domain.dto.AuthenticationRequest;
-import ge.atm.atmservice.domain.dto.AuthenticationResponse;
+import ge.atm.atmservice.domain.AuthenticationRequest;
+import ge.atm.atmservice.domain.AuthenticationResponse;
 import ge.atm.atmservice.service.AuthenticationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

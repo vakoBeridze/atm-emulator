@@ -1,4 +1,4 @@
-package ge.atm.atmservice.domain.dto;
+package ge.atm.atmservice.domain;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
