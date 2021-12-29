@@ -2,11 +2,13 @@ package ge.atm.atmservice.domain;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import org.springframework.validation.annotation.Validated;
 
 import java.io.Serializable;
 
 @ApiModel(description = "Authentication Request")
+@Builder
 @Validated
 public class AuthenticationRequest implements Serializable {
 

@@ -26,8 +26,9 @@ public class CardBalanceController {
 
     @ApiOperation(value = "Get current balance for authenticated card")
     @GetMapping
-    public BigDecimal getCurrentBalance() {
-        return cardBalanceService.getCurrentBalance();
+    public ResponseEntity<BigDecimal> getCurrentBalance() {
+        final BigDecimal balance = cardBalanceService.getCurrentBalance();
+        return ResponseEntity.ok(balance);
     }
 
     @ApiOperation(value = "Deposit money for authenticated card")

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BankServiceConfig {
 
-    @Value("${bank-service.base-path:http://localhost:8090/}")
+    @Value("${bank-service.base-path}")
     private String bankServiceBasePath;
 
     @Value("${bank-service.auth-token}")
