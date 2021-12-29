@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,4 +16,5 @@ public class CardDto {
     private long id;
     private String cardNumber;
     private AuthenticationMethod preferredAuth;
+    private BigDecimal balance;
 }

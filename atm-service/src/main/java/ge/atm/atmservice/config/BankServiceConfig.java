@@ -1,7 +1,7 @@
 package ge.atm.atmservice.config;
 
 import ge.atm.bankservice.ApiClient;
-import ge.atm.bankservice.api.CardControllerApi;
+import ge.atm.bankservice.api.BankAccountControllerApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +16,8 @@ public class BankServiceConfig {
     private String bankServiceApiKey;
 
     @Bean
-    public CardControllerApi cardControllerApi() {
-        return new CardControllerApi(apiClient());
+    public BankAccountControllerApi bankAccountControllerApi() {
+        return new BankAccountControllerApi(apiClient());
     }
 
     private ApiClient apiClient() {

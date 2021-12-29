@@ -67,6 +67,10 @@ public class JwtCardDetails implements UserDetails {
 				.collect(Collectors.toSet());
 	}
 
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
 	public CardDto.PreferredAuthEnum getPreferredAuthenticationMethod() {
 		return preferredAuthenticationMethod;
 	}

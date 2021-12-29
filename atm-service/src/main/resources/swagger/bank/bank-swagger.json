@@ -15,15 +15,15 @@
   "basePath": "/",
   "tags": [
     {
-      "name": "card-controller",
-      "description": "Card Controller"
+      "name": "bank-account-controller",
+      "description": "Bank Account Controller"
     }
   ],
   "paths": {
-    "/card": {
+    "/api/account/card": {
       "get": {
         "tags": [
-          "card-controller"
+          "bank-account-controller"
         ],
         "summary": "getCard",
         "operationId": "getCardUsingGET",
@@ -65,10 +65,114 @@
         "deprecated": false
       }
     },
-    "/card/validate": {
+    "/api/account/card/balance": {
+      "get": {
+        "tags": [
+          "bank-account-controller"
+        ],
+        "summary": "getCardBalance",
+        "operationId": "getCardBalanceUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "cardNumber",
+            "in": "query",
+            "description": "cardNumber",
+            "required": true,
+            "type": "string",
+            "allowEmptyValue": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "number"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "deprecated": false
+      }
+    },
+    "/api/account/card/deposit": {
       "post": {
         "tags": [
-          "card-controller"
+          "bank-account-controller"
+        ],
+        "summary": "depositCardBalance",
+        "operationId": "depositCardBalanceUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "amount",
+            "in": "query",
+            "description": "amount",
+            "required": true,
+            "type": "number",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "cardNumber",
+            "in": "query",
+            "description": "cardNumber",
+            "required": true,
+            "type": "string",
+            "allowEmptyValue": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "number"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "deprecated": false
+      }
+    },
+    "/api/account/card/validate": {
+      "post": {
+        "tags": [
+          "bank-account-controller"
         ],
         "summary": "validateCardSecret",
         "operationId": "validateCardSecretUsingPOST",
@@ -132,6 +236,65 @@
         ],
         "deprecated": false
       }
+    },
+    "/api/account/card/withdraw": {
+      "post": {
+        "tags": [
+          "bank-account-controller"
+        ],
+        "summary": "withdrawCardBalance",
+        "operationId": "withdrawCardBalanceUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "amount",
+            "in": "query",
+            "description": "amount",
+            "required": true,
+            "type": "number",
+            "allowEmptyValue": false
+          },
+          {
+            "name": "cardNumber",
+            "in": "query",
+            "description": "cardNumber",
+            "required": true,
+            "type": "string",
+            "allowEmptyValue": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "number"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "deprecated": false
+      }
     }
   },
   "securityDefinitions": {
@@ -145,6 +308,9 @@
     "CardDto": {
       "type": "object",
       "properties": {
+        "balance": {
+          "type": "number"
+        },
         "cardNumber": {
           "type": "string"
         },

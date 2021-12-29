@@ -1,7 +1,7 @@
 package ge.atm.atmservice.service.impl;
 
 import ge.atm.atmservice.service.CardService;
-import ge.atm.bankservice.api.CardControllerApi;
+import ge.atm.bankservice.api.BankAccountControllerApi;
 import ge.atm.bankservice.domain.dto.CardDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class CardServiceImpl implements CardService {
 
-    private final CardControllerApi cardControllerApi;
+    private final BankAccountControllerApi bankAccountControllerApi;
 
     public CardDto getCard(String cardNumber) {
-        return cardControllerApi.getCardUsingGET(cardNumber);
+        return bankAccountControllerApi.getCardUsingGET(cardNumber);
     }
 }
