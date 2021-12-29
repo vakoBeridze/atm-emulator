@@ -2,6 +2,7 @@ package ge.atm.atmservice.api;
 
 import ge.atm.atmservice.service.CardBalanceService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,17 +24,20 @@ public class CardBalanceController {
         this.cardBalanceService = cardBalanceService;
     }
 
+    @ApiOperation(value = "Get current balance for authenticated card")
     @GetMapping
     public BigDecimal getCurrentBalance() {
         return cardBalanceService.getCurrentBalance();
     }
 
+    @ApiOperation(value = "Deposit money for authenticated card")
     @PostMapping("/deposit")
     public ResponseEntity<BigDecimal> depositCardBalance(@ApiParam(name = "amount", required = true) @RequestParam BigDecimal amount) {
         final BigDecimal balance = cardBalanceService.depositCardBalance(amount);
         return ResponseEntity.ok(balance);
     }
 
+    @ApiOperation(value = "Withdraw money for authenticated card")
     @PostMapping("/withdraw")
     public ResponseEntity<BigDecimal> withdrawCardBalance(@ApiParam(name = "amount", required = true) @RequestParam BigDecimal amount) {
         final BigDecimal balance = cardBalanceService.withdrawCardBalance(amount);

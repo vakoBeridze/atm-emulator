@@ -17,9 +17,12 @@ import javax.persistence.ManyToOne;
 public class CardCredential {
     @Id
     private long id;
+
     private String secret;
+
     @ManyToOne
     private AuthMethod credentialType;
+
     @ManyToOne
     private Card card;
 }
