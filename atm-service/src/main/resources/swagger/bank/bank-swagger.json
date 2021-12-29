@@ -25,7 +25,7 @@
         "tags": [
           "bank-account-controller"
         ],
-        "summary": "getCard",
+        "summary": "Get card details for given card number",
         "operationId": "getCardUsingGET",
         "produces": [
           "*/*"
@@ -70,7 +70,7 @@
         "tags": [
           "bank-account-controller"
         ],
-        "summary": "getCardBalance",
+        "summary": "Get current balance for given card number",
         "operationId": "getCardBalanceUsingGET",
         "produces": [
           "*/*"
@@ -115,7 +115,7 @@
         "tags": [
           "bank-account-controller"
         ],
-        "summary": "depositCardBalance",
+        "summary": "Deposit money for given card number",
         "operationId": "depositCardBalanceUsingPOST",
         "consumes": [
           "application/json"
@@ -174,7 +174,7 @@
         "tags": [
           "bank-account-controller"
         ],
-        "summary": "validateCardSecret",
+        "summary": "Validate card secret for given card number",
         "operationId": "validateCardSecretUsingPOST",
         "consumes": [
           "application/json"
@@ -242,7 +242,7 @@
         "tags": [
           "bank-account-controller"
         ],
-        "summary": "withdrawCardBalance",
+        "summary": "Withdraw money for given card number",
         "operationId": "withdrawCardBalanceUsingPOST",
         "consumes": [
           "application/json"
