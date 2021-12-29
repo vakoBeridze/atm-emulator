@@ -1,6 +1,6 @@
 package ge.atm.atmservice.api;
 
-import ge.atm.atmservice.testconfig.WithAuthenticationFinalizedUser;
+import ge.atm.atmservice.testconfig.WithAuthenticationFinalizedCard;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -43,7 +43,7 @@ class CardBalanceControllerTest extends BaseControllerTest {
     }
 
     @Test
-    @WithAuthenticationFinalizedUser
+    @WithAuthenticationFinalizedCard
     void getCurrentBalance() throws Exception {
         // Given
         BigDecimal mockResponse = BigDecimal.TEN;
@@ -58,7 +58,7 @@ class CardBalanceControllerTest extends BaseControllerTest {
     }
 
     @Test
-    @WithAuthenticationFinalizedUser
+    @WithAuthenticationFinalizedCard
     void depositCardBalance() throws Exception {
         // Given
         BigDecimal mockResponse = BigDecimal.TEN;
@@ -74,7 +74,7 @@ class CardBalanceControllerTest extends BaseControllerTest {
     }
 
     @Test
-    @WithAuthenticationFinalizedUser
+    @WithAuthenticationFinalizedCard
     void withdrawCardBalance() throws Exception {
         // Given
         BigDecimal mockResponse = BigDecimal.ZERO;

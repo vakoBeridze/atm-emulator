@@ -4,6 +4,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-@WithMockCustomUser(username = "1111222233334444", name = "Vako Beridze", roles = "FINALIZED_AUTHENTICATION")
-public @interface WithAuthenticationFinalizedUser {
+@WithMockCustomCard(cardNumber = "1111222233334444", roles = "FINALIZED_AUTHENTICATION")
+public @interface WithAuthenticationFinalizedCard {
 }

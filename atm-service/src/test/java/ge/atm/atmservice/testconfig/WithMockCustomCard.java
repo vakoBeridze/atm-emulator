@@ -17,26 +17,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Retention(RetentionPolicy.RUNTIME)
-@WithSecurityContext(factory = WithMockCustomUserSecurityContextFactory.class)
-public @interface WithMockCustomUser {
+@WithSecurityContext(factory = WithMockCustomCardSecurityContextFactory.class)
+public @interface WithMockCustomCard {
 
-    String username() default "1111222211112222";
+    String cardNumber() default "1111222211112222";
 
     String[] roles() default {};
-
-    String name() default "Test User";
 }
 
-class WithMockCustomUserSecurityContextFactory implements WithSecurityContextFactory<WithMockCustomUser> {
+class WithMockCustomCardSecurityContextFactory implements WithSecurityContextFactory<WithMockCustomCard> {
     @Override
-    public SecurityContext createSecurityContext(WithMockCustomUser customUser) {
+    public SecurityContext createSecurityContext(WithMockCustomCard customCard) {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
 
-        List<SimpleGrantedAuthority> roles = Arrays.stream(customUser.roles())
+        List<SimpleGrantedAuthority> roles = Arrays.stream(customCard.roles())
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 
-        JwtCardDetails principal = new JwtCardDetails(customUser.username(), CardDto.PreferredAuthEnum.PIN, roles);
+        JwtCardDetails principal = new JwtCardDetails(customCard.cardNumber(), CardDto.PreferredAuthEnum.PIN, roles);
         Authentication auth = new UsernamePasswordAuthenticationToken(principal, "password", principal.getAuthorities());
         context.setAuthentication(auth);
         return context;
