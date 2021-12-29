@@ -1,7 +1,7 @@
 package ge.atm.atmservice.security.jwt;
 
 
-import ge.atm.atmservice.domain.dto.AuthenticationMethod;
+import ge.atm.bankservice.domain.dto.CardDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 public class JwtCardDetails implements UserDetails {
 
 	private final String cardNumber;
-	private final AuthenticationMethod preferredAuthenticationMethod;
+	private final CardDto.PreferredAuthEnum preferredAuthenticationMethod;
 	private final Collection<? extends GrantedAuthority> authorities;
 
 
-	public JwtCardDetails(String cardNumber, AuthenticationMethod authenticationMethod, Collection<? extends GrantedAuthority> authorities) {
+	public JwtCardDetails(String cardNumber, CardDto.PreferredAuthEnum authenticationMethod, Collection<? extends GrantedAuthority> authorities) {
 		this.cardNumber = cardNumber;
 		this.preferredAuthenticationMethod = authenticationMethod;
 		this.authorities = authorities;
@@ -67,7 +67,7 @@ public class JwtCardDetails implements UserDetails {
 				.collect(Collectors.toSet());
 	}
 
-	public AuthenticationMethod getPreferredAuthenticationMethod() {
+	public CardDto.PreferredAuthEnum getPreferredAuthenticationMethod() {
 		return preferredAuthenticationMethod;
 	}
 }

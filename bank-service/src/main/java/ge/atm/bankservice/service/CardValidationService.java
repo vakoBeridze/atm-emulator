@@ -1,4 +1,4 @@
-package ge.atm.atmservice.service;
+package ge.atm.bankservice.service;
 
 public interface CardValidationService {
 

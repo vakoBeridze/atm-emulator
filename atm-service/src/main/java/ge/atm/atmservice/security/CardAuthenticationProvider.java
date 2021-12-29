@@ -1,8 +1,7 @@
 package ge.atm.atmservice.security;
 
-import ge.atm.atmservice.domain.dao.Card;
-import ge.atm.atmservice.domain.dto.AuthenticationMethod;
 import ge.atm.atmservice.service.CardService;
+import ge.atm.bankservice.domain.dto.CardDto;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,9 +18,9 @@ public class CardAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         final String cardNumber = authentication.getName();
-        final Card card = cardService.getCard(cardNumber);
-        final UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(card.getCardNumber(), null);
-        authenticationToken.setDetails(AuthenticationMethod.valueOf(card.getPreferredAuth().getId()));
+        final CardDto cardDto = cardService.getCard(cardNumber);
+        final UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(cardDto.getCardNumber(), null);
+        authenticationToken.setDetails(cardDto.getPreferredAuth());
         return authenticationToken;
     }
 

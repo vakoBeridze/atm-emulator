@@ -1,0 +1,22 @@
+server:
+  port: 8090
+
+
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/atm-emulator}
+    username: ${DB_USER:atm}
+    password: ${DB_PASSWORD:thisistoosimple}
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+
+bank-service:
+  auth-token-header-name: X-API-KEY
+  auth-token: ${BANK_SERIVCE_API_KEY:some-long-api-key}

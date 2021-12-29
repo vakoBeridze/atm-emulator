@@ -1,6 +1,6 @@
-package ge.atm.atmservice.repository;
+package ge.atm.bankservice.repository;
 
-import ge.atm.atmservice.domain.dao.Card;
+import ge.atm.bankservice.domain.dao.Card;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

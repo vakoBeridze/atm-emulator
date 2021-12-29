@@ -1,7 +1,7 @@
 package ge.atm.atmservice.security.jwt;
 
-import ge.atm.atmservice.domain.dto.AuthenticationMethod;
 import ge.atm.atmservice.security.Roles;
+import ge.atm.bankservice.domain.dto.CardDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -61,14 +61,14 @@ public class JwtTokenProvider {
      * @param subject as card number
      * @return BASE64 encoded JWT access token.
      */
-    public String generateToken(String subject, AuthenticationMethod authMethod, Boolean finalized) {
+    public String generateToken(String subject, CardDto.PreferredAuthEnum preferredAuth, Boolean finalized) {
         Date now = new Date();
         int expirationInMillis = this.expirationInSeconds * 1000;
         Date expirationDate = new Date(now.getTime() + expirationInMillis);
 
         Claims claims = Jwts.claims();
         claims.setSubject(subject);
-        claims.put("preferred_auth", authMethod);
+        claims.put("preferred_auth", preferredAuth);
         claims.put("roles", finalized ? Collections.singletonList(Roles.ROLE_FINALIZED_AUTHENTICATION) : Collections.emptyList());
 
         return Jwts.builder()
@@ -89,7 +89,7 @@ public class JwtTokenProvider {
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 
-        return new JwtCardDetails(claims.getSubject(), AuthenticationMethod.valueOf(preferredAuth), authorities);
+        return new JwtCardDetails(claims.getSubject(), CardDto.PreferredAuthEnum.valueOf(preferredAuth), authorities);
     }
 
     public String resolveToken(HttpServletRequest request) {

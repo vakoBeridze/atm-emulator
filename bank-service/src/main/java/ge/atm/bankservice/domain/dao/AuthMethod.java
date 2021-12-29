@@ -1,4 +1,4 @@
-package ge.atm.atmservice.domain.dao;
+package ge.atm.bankservice.domain.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,17 +7,15 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Builder
-public class CardCredential {
+public class AuthMethod {
+
     @Id
     private long id;
-    private String secret;
-    @ManyToOne
-    private AuthMethod credentialType;
+    private String description;
 }

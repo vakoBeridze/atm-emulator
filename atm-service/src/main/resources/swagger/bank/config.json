@@ -1,0 +1,8 @@
+{
+  "library": "resttemplate",
+  "dateLibrary": "legacy",
+  "hideGenerationTimestamp": true,
+  "modelPropertyNaming": "camelCase",
+  "modelPackage": "ge.atm.bankservice.domain.dto",
+  "apiPackage": "ge.atm.bankservice.api"
+}

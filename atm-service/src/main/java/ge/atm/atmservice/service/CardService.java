@@ -1,10 +1,10 @@
 package ge.atm.atmservice.service;
 
-import ge.atm.atmservice.domain.dao.Card;
+import ge.atm.bankservice.domain.dto.CardDto;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface CardService {
 
-    Card getCard(String cardNumber);
+    CardDto getCard(String cardNumber);
 }

@@ -2,6 +2,8 @@ plugins {
     id 'org.springframework.boot' version '2.6.2'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'idea'
+    id "org.hidetake.swagger.generator" version '2.19.1'
 }
 
 group 'ge.atm'
@@ -14,20 +16,41 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'io.springfox:springfox-swagger2:2.10.5'
     implementation 'io.springfox:springfox-swagger-ui:2.10.5'
+    swaggerCodegen 'io.swagger:swagger-codegen-cli:2.4.25' // Swagger Codegen V2
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
-//    implementation 'org.modelmapper:modelmapper:2.4.5'
-    implementation 'org.postgresql:postgresql:42.3.1'
-
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
+idea {
+    module { generatedSourceDirs += file('src/main/generated') }
+    module { generatedSourceDirs += file('build/generated/java') }
+    module { generatedSourceDirs += file('build/swagger-code-bank/src/main/java') }
+}
+
+sourceSets {
+    main { java { srcDirs += file('src/main/generated') } }
+    main { java { srcDirs += file('build/generated/java') } }
+    main { java { srcDirs += file('build/swagger-code-bank/src/main/java') } }
+}
+
+swaggerSources {
+    bank {
+        inputFile = file('src/main/resources/swagger/bank/bank-swagger.json')
+        code {
+            language = 'java'
+            configFile = file('src/main/resources/swagger/bank/config.json')
+        }
+    }
+}
+
 test {
     useJUnitPlatform()
 }
+
+compileJava.dependsOn generateSwaggerCode
