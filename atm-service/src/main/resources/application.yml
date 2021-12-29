@@ -1,6 +1,10 @@
 server:
   port: 8080
 
+logging:
+  level:
+    root: ${LOG_LEVEL:info}
+
 spring:
   mvc:
     pathmatch:

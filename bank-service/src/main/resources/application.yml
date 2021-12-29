@@ -1,6 +1,9 @@
 server:
   port: 8090
 
+logging:
+  level:
+    root: ${LOG_LEVEL:info}
 
 spring:
   datasource:
