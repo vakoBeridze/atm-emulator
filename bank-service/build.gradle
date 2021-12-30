@@ -7,6 +7,10 @@ plugins {
 group 'ge.atm'
 version '1.0'
 
+bootJar {
+    archiveFileName = "${archiveBaseName.get()}.${archiveExtension.get()}"
+}
+
 repositories {
     mavenCentral()
 }
@@ -24,6 +28,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'com.h2database:h2-mvstore:2.0.204'
 }
 
 test {

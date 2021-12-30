@@ -1,5 +1,30 @@
 version: '3'
 services:
+
+  atm-service:
+    build:
+      context: ./atm-service
+    container_name: atm-service
+    image: atm-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - bank-service
+    environment:
+      BANK_SERIVCE_URL: http://bank-service:8090
+
+  bank-service:
+    build:
+      context: ./bank-service
+    container_name: bank-service
+    image: bank-service
+    ports:
+      - "8090:8090"
+    depends_on:
+      - postgres-db
+    environment:
+      DB_URL: jdbc:postgresql://postgres-db:5432/atm-emulator
+
   postgres-db:
     build:
       context: ./atm-db

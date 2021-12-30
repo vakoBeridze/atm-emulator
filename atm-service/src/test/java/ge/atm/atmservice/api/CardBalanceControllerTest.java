@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -66,7 +66,7 @@ class CardBalanceControllerTest extends BaseControllerTest {
 
         // When
         // Then
-        mockMvc.perform(post("/api/balance/deposit")
+        mockMvc.perform(put("/api/balance/deposit")
                         .param("amount", "10"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -82,7 +82,7 @@ class CardBalanceControllerTest extends BaseControllerTest {
 
         // When
         // Then
-        mockMvc.perform(post("/api/balance/withdraw")
+        mockMvc.perform(put("/api/balance/withdraw")
                         .param("amount", "10"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

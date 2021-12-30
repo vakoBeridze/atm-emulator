@@ -6,6 +6,20 @@ logging:
     root: ${LOG_LEVEL:info}
 
 spring:
+#  datasource:
+  #    driverClassName: org.postgresql.Driver
+  #    url: ${DB_URL:jdbc:postgresql://localhost:5432/postgres}
+  #    username: ${DB_USER:postgres}
+  #    password: ${DB_PASSWORD:password}
+  #  flyway:
+  #    enabled: false
+  #  jpa:
+  #    show-sql: false
+  #    properties:
+  #      hibernate:
+  #        format_sql: true
+  #    hibernate:
+  #      ddl-auto: create
   datasource:
     driverClassName: org.postgresql.Driver
     url: ${DB_URL:jdbc:postgresql://localhost:5432/atm-emulator}
