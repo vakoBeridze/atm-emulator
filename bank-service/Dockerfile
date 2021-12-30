@@ -3,7 +3,6 @@ WORKDIR /bank-service
 COPY src src
 COPY build.gradle .
 RUN gradle build --no-daemon
-RUN ls -a build/libs
 
 FROM openjdk:11-jre-slim
 COPY --from=build /bank-service/build/libs/bank-service.jar /app.jar
