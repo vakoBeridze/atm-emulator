@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Version;
 import java.math.BigDecimal;
 
 @Data
@@ -31,4 +32,7 @@ public class Card {
     private AuthMethod preferredAuth;
 
     private BigDecimal balance;
+
+    @Version
+    private long version;
 }

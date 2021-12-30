@@ -68,7 +68,7 @@ public class BankAccountController {
     @ApiOperation(value = "Withdraw money for given card number")
     @PutMapping("/{cardNumber}/withdraw")
     public ResponseEntity<BigDecimal> withdrawCardBalance(@ApiParam(name = "cardNumber", required = true, example = "12345678") @PathVariable String cardNumber,
-                                                          @ApiParam(name = "amount", required = true, example = "11.2") @RequestParam BigDecimal amount) {
+                                                          @ApiParam(name = "amount", required = true, example = "11.2") @RequestParam BigDecimal amount) throws InterruptedException {
         final BigDecimal balance = bankAccountService.withdrawCardBalance(cardNumber, amount);
         return ResponseEntity.ok(balance);
     }

@@ -10,10 +10,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -110,23 +114,49 @@ class BankAccountServiceImplTest {
 
     @Test
     void depositCardBalance() {
-        // TODO
         // Given
+        final Card mockCard = Card.builder().balance(BigDecimal.valueOf(800)).build();
+        final Card mockSavedCard = Card.builder().balance(BigDecimal.valueOf(900)).build();
+        doReturn(Optional.of(mockCard)).when(cardRepository).findByCardNumber(any());
+        doReturn(mockSavedCard).when(cardRepository).save(any());
 
         // When
-        final BigDecimal result = bankAccountService.depositCardBalance("1111", BigDecimal.TEN);
+        final BigDecimal balance = bankAccountService.depositCardBalance("1111", BigDecimal.valueOf(100));
 
         // Then
+        Assertions.assertEquals(BigDecimal.valueOf(900), balance);
+        verify(cardRepository, times(1)).findByCardNumber(any());
+        verify(cardRepository, times(1)).save(any());
+    }
+
+    @Test
+    void withdrawCardBalanceNotEnoughBalance() {
+        // Given
+        final Card mockCard = Card.builder().balance(BigDecimal.valueOf(999)).build();
+        doReturn(Optional.of(mockCard)).when(cardRepository).findByCardNumber(any());
+
+        // When
+        // Then
+        ResponseStatusException exception = Assertions.assertThrows(ResponseStatusException.class, () -> bankAccountService.withdrawCardBalance("1111", BigDecimal.valueOf(10000)));
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        assertTrue(Objects.requireNonNull(exception.getMessage()).contains("Balance is less then requested amount"));
+        verify(cardRepository, times(1)).findByCardNumber(any());
     }
 
     @Test
     void withdrawCardBalance() {
-        // TODO
         // Given
+        final Card mockCard = Card.builder().balance(BigDecimal.valueOf(800)).build();
+        final Card mockSavedCard = Card.builder().balance(BigDecimal.valueOf(700)).build();
+        doReturn(Optional.of(mockCard)).when(cardRepository).findByCardNumber(any());
+        doReturn(mockSavedCard).when(cardRepository).save(any());
 
         // When
-        final BigDecimal result = bankAccountService.withdrawCardBalance("1111", BigDecimal.ONE);
+        final BigDecimal balance = bankAccountService.withdrawCardBalance("1111", BigDecimal.valueOf(100));
 
         // Then
+        Assertions.assertEquals(BigDecimal.valueOf(700), balance);
+        verify(cardRepository, times(1)).findByCardNumber(any());
+        verify(cardRepository, times(1)).save(any());
     }
 }

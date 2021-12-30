@@ -15,7 +15,8 @@ create table card
     preferred_auth_id bigint         not null
         constraint card_auth_method_id_fk
             references auth_method,
-    balance           numeric(19, 2) not null
+    balance           numeric(19, 2) not null,
+    version           bigint         not null
 );
 
 create table card_credential

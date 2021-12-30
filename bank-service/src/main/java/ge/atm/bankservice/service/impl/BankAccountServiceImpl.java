@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -74,14 +75,41 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public BigDecimal depositCardBalance(String cardNumber, BigDecimal amount) {
         log.debug("Deposit money for card: {}, amount: {}", cardNumber, amount);
-        // TODO
-        return null;
+        final Card card = cardRepository.findByCardNumber(cardNumber)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card could not be found"));
+
+        final BigDecimal currentBalance = card.getBalance();
+        card.setBalance(currentBalance.add(amount));
+
+        try {
+            final Card savedCard = cardRepository.save(card);
+            return savedCard.getBalance();
+        } catch (ObjectOptimisticLockingFailureException e) {
+            log.error("Error while depositing money for card: {}, amount: {}", cardNumber, amount, e);
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Could not complete transaction.");
+        }
     }
 
     @Override
     public BigDecimal withdrawCardBalance(String cardNumber, BigDecimal amount) {
         log.debug("Withdraw money for card: {}, amount: {}", cardNumber, amount);
-        // TODO
-        return null;
+        final Card card = cardRepository.findByCardNumber(cardNumber)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card could not be found"));
+
+        final BigDecimal currentBalance = card.getBalance();
+        if (currentBalance.compareTo(amount) < 0) {
+            log.warn("Balance: {} for card: {} is less then requested amount: {} ", currentBalance, cardNumber, amount);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Balance is less then requested amount.");
+        }
+
+        card.setBalance(currentBalance.subtract(amount));
+
+        try {
+            final Card savedCard = cardRepository.save(card);
+            return savedCard.getBalance();
+        } catch (ObjectOptimisticLockingFailureException e) {
+            log.error("Error while withdrawing money for card: {}, amount: {}", cardNumber, amount, e);
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Could not complete transaction.");
+        }
     }
 }
