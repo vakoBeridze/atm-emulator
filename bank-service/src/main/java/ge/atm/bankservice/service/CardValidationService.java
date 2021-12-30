@@ -1,5 +1,7 @@
 package ge.atm.bankservice.service;
 
+import ge.atm.bankservice.domain.dto.CardValidationResult;
+
 public interface CardValidationService {
 
     String PIN_CODE_VALIDATOR = "pin-code-validator";
@@ -10,6 +12,7 @@ public interface CardValidationService {
      *
      * @param cardNumber number of card
      * @param secret     secret for validation
+     * @return ValidationResult
      */
-    void validate(String cardNumber, String secret);
+    CardValidationResult validate(String cardNumber, String secret);
 }

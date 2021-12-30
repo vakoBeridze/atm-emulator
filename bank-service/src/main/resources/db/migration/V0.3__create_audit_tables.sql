@@ -17,14 +17,16 @@ create table auth_method_aud
 
 create table card_aud
 (
-    id                bigint  not null,
-    rev               integer not null
+    id                 bigint                not null,
+    rev                integer               not null
         constraint fka3m9sqpy9cfw8y74egtvlixbu
             references revinfo,
-    revtype           smallint,
-    balance           numeric(19, 2),
-    card_number       varchar(255),
-    preferred_auth_id bigint,
+    revtype            smallint,
+    balance            numeric(19, 2),
+    card_number        varchar(255),
+    preferred_auth_id  bigint,
+    incorrect_attempts integer default 0,
+    blocked            boolean default false not null,
     primary key (id, rev)
 );
 

@@ -3,6 +3,7 @@ package ge.atm.bankservice.service.impl;
 import ge.atm.bankservice.domain.dao.Card;
 import ge.atm.bankservice.domain.dto.AuthenticationMethod;
 import ge.atm.bankservice.domain.dto.CardDto;
+import ge.atm.bankservice.domain.dto.CardValidationResult;
 import ge.atm.bankservice.repository.CardRepository;
 import ge.atm.bankservice.service.BankAccountService;
 import ge.atm.bankservice.service.CardValidationService;
@@ -59,6 +60,7 @@ class BankAccountServiceImplTest {
         // Given
         final Card mockCard = Card.builder().balance(BigDecimal.valueOf(999)).build();
         doReturn(Optional.of(mockCard)).when(cardRepository).findByCardNumber(any());
+        doReturn(new CardValidationResult()).when(fingerprintValidator).validate(any(), any());
 
         // When
         bankAccountService.validateCardSecret("1111", "1234", AuthenticationMethod.FINGERPRINT);
@@ -73,11 +75,31 @@ class BankAccountServiceImplTest {
         // Given
         final Card mockCard = Card.builder().balance(BigDecimal.valueOf(999)).build();
         doReturn(Optional.of(mockCard)).when(cardRepository).findByCardNumber(any());
+        doReturn(new CardValidationResult()).when(pinCodeValidator).validate(any(), any());
 
         // When
         bankAccountService.validateCardSecret("1111", "1234", AuthenticationMethod.PIN);
 
         // Then
+        verify(fingerprintValidator, times(0)).validate(any(), any());
+        verify(pinCodeValidator, times(1)).validate(any(), any());
+    }
+
+    @Test
+    void validateCardSecretPinError() {
+        // Given
+        final Card mockCard = Card.builder().balance(BigDecimal.valueOf(999)).build();
+        doReturn(Optional.of(mockCard)).when(cardRepository).findByCardNumber(any());
+        doReturn(mockCard).when(cardRepository).save(any());
+        doReturn(new CardValidationResult("invalid pin code")).when(pinCodeValidator).validate(any(), any());
+
+        // When
+        // Then
+        ResponseStatusException exception = Assertions.assertThrows(ResponseStatusException.class, () -> bankAccountService.validateCardSecret("1111", "1234", AuthenticationMethod.PIN));
+        Assertions.assertEquals(HttpStatus.UNAUTHORIZED, exception.getStatus());
+        assertTrue(Objects.requireNonNull(exception.getMessage()).contains("invalid pin code"));
+        verify(cardRepository, times(1)).findByCardNumber(any());
+        verify(cardRepository, times(1)).save(any());
         verify(fingerprintValidator, times(0)).validate(any(), any());
         verify(pinCodeValidator, times(1)).validate(any(), any());
     }

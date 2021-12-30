@@ -4,6 +4,7 @@ import ge.atm.bankservice.domain.dao.AuthMethod;
 import ge.atm.bankservice.domain.dao.Card;
 import ge.atm.bankservice.domain.dto.AuthenticationMethod;
 import ge.atm.bankservice.domain.dto.CardDto;
+import ge.atm.bankservice.domain.dto.CardValidationResult;
 import ge.atm.bankservice.repository.CardRepository;
 import ge.atm.bankservice.service.BankAccountService;
 import ge.atm.bankservice.service.CardValidationService;
@@ -21,6 +22,7 @@ import java.math.BigDecimal;
 @Service
 public class BankAccountServiceImpl implements BankAccountService {
 
+    public static final int MAX_INCORRECT_ATTEMPTS = 3;
     private final CardRepository cardRepository;
     private final ModelMapper modelMapper;
     private final CardValidationService pinCodeValidator;
@@ -37,29 +39,57 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     public CardDto getCard(String cardNumber) {
         log.debug("Get card details for card: {}", cardNumber);
-        return cardRepository.findByCardNumber(cardNumber)
-                .map(card -> modelMapper.map(card, CardDto.class))
+        final Card card = fetchCard(cardNumber);
+        return modelMapper.map(card, CardDto.class);
+    }
+
+    private Card fetchCard(String cardNumber) {
+        final Card card = cardRepository.findByCardNumber(cardNumber)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Card could not be found"));
+
+        if (card.isBlocked()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card is blocked");
+        }
+        return card;
     }
 
     @Override
     public void validateCardSecret(String cardNumber, String secret, AuthenticationMethod preferredAuthenticationMethod) {
         log.debug("Validate card secret for card: {}, authMethod: {}", cardNumber, preferredAuthenticationMethod.name());
+        CardValidationResult validationResult;
+        final Card card = fetchCard(cardNumber);
+
+        int incorrectAttempts = card.getIncorrectAttempts();
+
         switch (preferredAuthenticationMethod) {
             case PIN:
-                pinCodeValidator.validate(cardNumber, secret);
+                validationResult = pinCodeValidator.validate(cardNumber, secret);
                 break;
             case FINGERPRINT:
-                fingerprintValidator.validate(cardNumber, secret);
+                validationResult = fingerprintValidator.validate(cardNumber, secret);
                 break;
+            default:
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unknown authentication method");
         }
+
+        if (validationResult.hasError()) {
+            updateIncorrectAttempts(card, incorrectAttempts + 1);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, validationResult.getErrorMessage());
+        }
+
+        updateIncorrectAttempts(card, 0);
+    }
+
+    private void updateIncorrectAttempts(Card card, int incorrectAttempts) {
+        card.setIncorrectAttempts(incorrectAttempts);
+        card.setBlocked(incorrectAttempts >= MAX_INCORRECT_ATTEMPTS);
+        cardRepository.save(card);
     }
 
     @Override
     public void updatePreferredAuth(String cardNumber, AuthenticationMethod preferredAuth) {
         log.debug("Update preferred authentication method for card: {}, authMethod: {}", cardNumber, preferredAuth.name());
-        final Card card = cardRepository.findByCardNumber(cardNumber)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Card could not be found"));
+        final Card card = fetchCard(cardNumber);
         card.setPreferredAuth(new AuthMethod(preferredAuth.getDatabaseId()));
         cardRepository.save(card);
     }
@@ -67,16 +97,13 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public BigDecimal getCurrentBalance(String cardNumber) {
         log.debug("Get current balance for card: {}", cardNumber);
-        return cardRepository.findByCardNumber(cardNumber)
-                .map(Card::getBalance)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Card could not be found"));
+        return fetchCard(cardNumber).getBalance();
     }
 
     @Override
     public BigDecimal depositCardBalance(String cardNumber, BigDecimal amount) {
         log.debug("Deposit money for card: {}, amount: {}", cardNumber, amount);
-        final Card card = cardRepository.findByCardNumber(cardNumber)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Card could not be found"));
+        final Card card = fetchCard(cardNumber);
 
         final BigDecimal currentBalance = card.getBalance();
         card.setBalance(currentBalance.add(amount));
@@ -93,8 +120,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     @Override
     public BigDecimal withdrawCardBalance(String cardNumber, BigDecimal amount) {
         log.debug("Withdraw money for card: {}, amount: {}", cardNumber, amount);
-        final Card card = cardRepository.findByCardNumber(cardNumber)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Card could not be found"));
+        final Card card = fetchCard(cardNumber);
 
         final BigDecimal currentBalance = card.getBalance();
         if (currentBalance.compareTo(amount) < 0) {

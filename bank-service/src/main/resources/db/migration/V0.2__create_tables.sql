@@ -8,15 +8,17 @@ create table auth_method
 
 create table card
 (
-    id                bigint         not null
+    id                 bigint                not null
         constraint card_pk
             primary key,
-    card_number       varchar(16)    not null,
-    preferred_auth_id bigint         not null
+    card_number        varchar(16)           not null,
+    preferred_auth_id  bigint                not null
         constraint card_auth_method_id_fk
             references auth_method,
-    balance           numeric(19, 2) not null,
-    version           bigint         not null
+    balance            numeric(19, 2)        not null,
+    incorrect_attempts integer default 0,
+    blocked            boolean default false not null,
+    version            bigint                not null
 );
 
 create table card_credential

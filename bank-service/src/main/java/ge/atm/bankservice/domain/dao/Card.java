@@ -29,11 +29,12 @@ public class Card {
     private long id;
 
     private String cardNumber;
+    private BigDecimal balance;
+    private boolean blocked;
+    private int incorrectAttempts;
 
     @ManyToOne
     private AuthMethod preferredAuth;
-
-    private BigDecimal balance;
 
     @Version
     private long version;

@@ -1,6 +1,7 @@
 package ge.atm.bankservice.service.impl;
 
 import ge.atm.bankservice.domain.dao.CardCredential;
+import ge.atm.bankservice.domain.dto.CardValidationResult;
 import ge.atm.bankservice.repository.CardCredentialRepository;
 import ge.atm.bankservice.service.CardValidationService;
 import org.junit.jupiter.api.Assertions;
@@ -64,10 +65,10 @@ class FingerprintValidationServiceImplTest {
         doReturn(Optional.of(mockCardCredential)).when(cardCredentialRepository).findByCard_CardNumberAndCredentialType_Id(any(), any());
 
         // When
+        final CardValidationResult validationResult = cardValidationService.validate("1111", "1234");
+
         // Then
-        ResponseStatusException exception = Assertions.assertThrows(ResponseStatusException.class, () -> cardValidationService.validate("1111", "1234"));
-        Assertions.assertEquals(HttpStatus.UNAUTHORIZED, exception.getStatus());
-        assertTrue(Objects.requireNonNull(exception.getMessage()).contains("Fingerprint not recognized"));
+        Assertions.assertEquals("Fingerprint not recognized.", validationResult.getErrorMessage());
         verify(cardCredentialRepository, times(1)).findByCard_CardNumberAndCredentialType_Id(any(), any());
     }
 }
