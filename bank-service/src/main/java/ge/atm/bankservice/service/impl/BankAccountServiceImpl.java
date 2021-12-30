@@ -1,5 +1,6 @@
 package ge.atm.bankservice.service.impl;
 
+import ge.atm.bankservice.domain.dao.AuthMethod;
 import ge.atm.bankservice.domain.dao.Card;
 import ge.atm.bankservice.domain.dto.AuthenticationMethod;
 import ge.atm.bankservice.domain.dto.CardDto;
@@ -51,6 +52,15 @@ public class BankAccountServiceImpl implements BankAccountService {
                 fingerprintValidator.validate(cardNumber, secret);
                 break;
         }
+    }
+
+    @Override
+    public void updatePreferredAuth(String cardNumber, AuthenticationMethod preferredAuth) {
+        log.debug("Update preferred authentication method for card: {}, authMethod: {}", cardNumber, preferredAuth.name());
+        final Card card = cardRepository.findByCardNumber(cardNumber)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card could not be found"));
+        card.setPreferredAuth(new AuthMethod(preferredAuth.getDatabaseId()));
+        cardRepository.save(card);
     }
 
     @Override

@@ -79,6 +79,21 @@ class BankAccountServiceImplTest {
     }
 
     @Test
+    void updatePreferredAuth() {
+        // Given
+        final Card mockCard = Card.builder().balance(BigDecimal.valueOf(999)).build();
+        doReturn(Optional.of(mockCard)).when(cardRepository).findByCardNumber(any());
+        doReturn(mockCard).when(cardRepository).save(any());
+
+        // When
+        bankAccountService.updatePreferredAuth("1111", AuthenticationMethod.PIN);
+
+        // Then
+        verify(cardRepository, times(1)).findByCardNumber(any());
+        verify(cardRepository, times(1)).save(any());
+    }
+
+    @Test
     void getCurrentBalance() {
         // Given
         final Card mockCard = Card.builder().balance(BigDecimal.valueOf(999)).build();

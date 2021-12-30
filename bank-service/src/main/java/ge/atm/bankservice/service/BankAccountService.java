@@ -11,6 +11,8 @@ public interface BankAccountService {
 
     void validateCardSecret(String cardNumber, String secret, AuthenticationMethod preferredAuthenticationMethod);
 
+    void updatePreferredAuth(String cardNumber, AuthenticationMethod preferredAuth);
+
     BigDecimal getCurrentBalance(String cardNumber);
 
     BigDecimal depositCardBalance(String cardNumber, BigDecimal amount);

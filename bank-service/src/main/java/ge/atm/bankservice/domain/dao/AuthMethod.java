@@ -18,4 +18,8 @@ public class AuthMethod {
     @Id
     private long id;
     private String description;
+
+    public AuthMethod(long id) {
+        this.id = id;
+    }
 }

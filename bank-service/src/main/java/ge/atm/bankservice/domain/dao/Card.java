@@ -6,8 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import java.math.BigDecimal;
 
 @Data
@@ -18,6 +21,8 @@ import java.math.BigDecimal;
 public class Card {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "card_id_seq_gen")
+    @SequenceGenerator(name = "card_id_seq_gen", allocationSize = 1, sequenceName = "card_id_seq")
     private long id;
 
     private String cardNumber;
