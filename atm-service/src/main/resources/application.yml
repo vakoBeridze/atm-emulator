@@ -3,8 +3,8 @@ server:
 
 logging:
   level:
-    root: ${LOG_LEVEL:info}
-    ge: debug
+    root: info
+    ge.atm.atmservice: ${LOG_LEVEL:debug}
 
 spring:
   mvc:

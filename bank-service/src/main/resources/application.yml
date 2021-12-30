@@ -3,23 +3,12 @@ server:
 
 logging:
   level:
-    root: ${LOG_LEVEL:info}
+    root: info
+    ge.atm.bankservice: ${LOG_LEVEL:debug}
 
 spring:
-#  datasource:
-  #    driverClassName: org.postgresql.Driver
-  #    url: ${DB_URL:jdbc:postgresql://localhost:5432/postgres}
-  #    username: ${DB_USER:postgres}
-  #    password: ${DB_PASSWORD:password}
-  #  flyway:
-  #    enabled: false
-  #  jpa:
-  #    show-sql: false
-  #    properties:
-  #      hibernate:
-  #        format_sql: true
-  #    hibernate:
-  #      ddl-auto: create
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
   datasource:
     driverClassName: org.postgresql.Driver
     url: ${DB_URL:jdbc:postgresql://localhost:5432/atm-emulator}
@@ -29,9 +18,6 @@ spring:
     enabled: true
   jpa:
     show-sql: false
-    properties:
-      hibernate:
-        format_sql: true
   mvc:
     pathmatch:
       matching-strategy: ant-path-matcher
