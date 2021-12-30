@@ -24,6 +24,7 @@ dependencies {
     implementation 'io.springfox:springfox-swagger-ui:2.9.2'
     implementation 'org.modelmapper:modelmapper:2.4.5'
     implementation 'org.flywaydb:flyway-core:8.2.3'
+    implementation 'org.hibernate:hibernate-envers'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

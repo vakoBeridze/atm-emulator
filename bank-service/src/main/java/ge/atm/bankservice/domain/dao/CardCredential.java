@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +17,7 @@ import javax.persistence.SequenceGenerator;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Audited
 @Builder
 public class CardCredential {
 
