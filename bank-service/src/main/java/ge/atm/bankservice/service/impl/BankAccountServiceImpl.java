@@ -39,7 +39,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         log.debug("Get card details for card: {}", cardNumber);
         return cardRepository.findByCardNumber(cardNumber)
                 .map(card -> modelMapper.map(card, CardDto.class))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card could not be found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Card could not be found"));
     }
 
     @Override
@@ -59,7 +59,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     public void updatePreferredAuth(String cardNumber, AuthenticationMethod preferredAuth) {
         log.debug("Update preferred authentication method for card: {}, authMethod: {}", cardNumber, preferredAuth.name());
         final Card card = cardRepository.findByCardNumber(cardNumber)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card could not be found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Card could not be found"));
         card.setPreferredAuth(new AuthMethod(preferredAuth.getDatabaseId()));
         cardRepository.save(card);
     }
@@ -69,14 +69,14 @@ public class BankAccountServiceImpl implements BankAccountService {
         log.debug("Get current balance for card: {}", cardNumber);
         return cardRepository.findByCardNumber(cardNumber)
                 .map(Card::getBalance)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card could not be found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Card could not be found"));
     }
 
     @Override
     public BigDecimal depositCardBalance(String cardNumber, BigDecimal amount) {
         log.debug("Deposit money for card: {}, amount: {}", cardNumber, amount);
         final Card card = cardRepository.findByCardNumber(cardNumber)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card could not be found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Card could not be found"));
 
         final BigDecimal currentBalance = card.getBalance();
         card.setBalance(currentBalance.add(amount));
@@ -94,7 +94,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     public BigDecimal withdrawCardBalance(String cardNumber, BigDecimal amount) {
         log.debug("Withdraw money for card: {}, amount: {}", cardNumber, amount);
         final Card card = cardRepository.findByCardNumber(cardNumber)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card could not be found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Card could not be found"));
 
         final BigDecimal currentBalance = card.getBalance();
         if (currentBalance.compareTo(amount) < 0) {

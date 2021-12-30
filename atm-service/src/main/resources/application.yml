@@ -4,6 +4,7 @@ server:
 logging:
   level:
     root: ${LOG_LEVEL:info}
+    ge: debug
 
 spring:
   mvc:

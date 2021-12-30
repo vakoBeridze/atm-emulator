@@ -15,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
@@ -47,9 +48,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Requested card is not permitted to finalize authentication.");
         }
 
-        log.debug("Accessing bank account api for secret validation. card number: {}", request.getCardNumber());
-        bankAccountControllerApi.validateCardSecretUsingPOST(authenticatedCardNumber, preferredAuthenticationMethod.name(), secret);
-
+        try {
+            log.debug("Accessing bank account api for secret validation. card number: {}", request.getCardNumber());
+            bankAccountControllerApi.validateCardSecretUsingPOST(authenticatedCardNumber, preferredAuthenticationMethod.name(), secret);
+        } catch (HttpClientErrorException e) {
+            log.error("Error while accessing from external bank api for secret validation.", e);
+            throw new ResponseStatusException(e.getStatusCode(), e.getMessage());
+        }
         final String accessToken = tokenProvider.generateToken(authenticatedCard.getUsername(), preferredAuthenticationMethod, true);
         return buildResponse(accessToken, requestedCardNumber, preferredAuthenticationMethod);
     }
