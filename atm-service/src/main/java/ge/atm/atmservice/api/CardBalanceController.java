@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,14 +32,14 @@ public class CardBalanceController {
     }
 
     @ApiOperation(value = "Deposit money for authenticated card")
-    @PostMapping("/deposit")
+    @PutMapping("/deposit")
     public ResponseEntity<BigDecimal> depositCardBalance(@ApiParam(name = "amount", required = true, example = "42.7") @RequestParam BigDecimal amount) {
         final BigDecimal balance = cardBalanceService.depositCardBalance(amount);
         return ResponseEntity.ok(balance);
     }
 
     @ApiOperation(value = "Withdraw money for authenticated card")
-    @PostMapping("/withdraw")
+    @PutMapping("/withdraw")
     public ResponseEntity<BigDecimal> withdrawCardBalance(@ApiParam(name = "amount", required = true, example = "17.02") @RequestParam BigDecimal amount) {
         final BigDecimal balance = cardBalanceService.withdrawCardBalance(amount);
         return ResponseEntity.ok(balance);

@@ -24,12 +24,12 @@ public class CardBalanceServiceImpl implements CardBalanceService {
     @Override
     public BigDecimal depositCardBalance(BigDecimal amount) {
         final String cardNumber = authenticatedCardService.getAuthenticatedCard().getCardNumber();
-        return bankAccountControllerApi.depositCardBalanceUsingPOST(amount, cardNumber);
+        return bankAccountControllerApi.depositCardBalanceUsingPUT(amount, cardNumber);
     }
 
     @Override
     public BigDecimal withdrawCardBalance(BigDecimal amount) {
         final String cardNumber = authenticatedCardService.getAuthenticatedCard().getCardNumber();
-        return bankAccountControllerApi.withdrawCardBalanceUsingPOST(amount, cardNumber);
+        return bankAccountControllerApi.withdrawCardBalanceUsingPUT(amount, cardNumber);
     }
 }

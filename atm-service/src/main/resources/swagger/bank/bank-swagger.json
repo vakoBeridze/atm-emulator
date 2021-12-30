@@ -20,7 +20,7 @@
     }
   ],
   "paths": {
-    "/api/account/card": {
+    "/api/card/{cardNumber}": {
       "get": {
         "tags": [
           "bank-account-controller"
@@ -33,11 +33,10 @@
         "parameters": [
           {
             "name": "cardNumber",
-            "in": "query",
+            "in": "path",
             "description": "cardNumber",
             "required": true,
-            "type": "string",
-            "allowEmptyValue": false
+            "type": "string"
           }
         ],
         "responses": {
@@ -65,7 +64,7 @@
         "deprecated": false
       }
     },
-    "/api/account/card/balance": {
+    "/api/card/{cardNumber}/balance": {
       "get": {
         "tags": [
           "bank-account-controller"
@@ -78,11 +77,10 @@
         "parameters": [
           {
             "name": "cardNumber",
-            "in": "query",
+            "in": "path",
             "description": "cardNumber",
             "required": true,
             "type": "string",
-            "allowEmptyValue": false,
             "x-example": "12345678"
           }
         ],
@@ -111,13 +109,13 @@
         "deprecated": false
       }
     },
-    "/api/account/card/deposit": {
-      "post": {
+    "/api/card/{cardNumber}/deposit": {
+      "put": {
         "tags": [
           "bank-account-controller"
         ],
         "summary": "Deposit money for given card number",
-        "operationId": "depositCardBalanceUsingPOST",
+        "operationId": "depositCardBalanceUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -136,11 +134,10 @@
           },
           {
             "name": "cardNumber",
-            "in": "query",
+            "in": "path",
             "description": "cardNumber",
             "required": true,
             "type": "string",
-            "allowEmptyValue": false,
             "x-example": "12345678"
           }
         ],
@@ -172,7 +169,67 @@
         "deprecated": false
       }
     },
-    "/api/account/card/validate": {
+    "/api/card/{cardNumber}/preferred-auth": {
+      "put": {
+        "tags": [
+          "bank-account-controller"
+        ],
+        "summary": "Update preferred authentication method for given card number",
+        "operationId": "updatePreferredAuthUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "cardNumber",
+            "in": "path",
+            "description": "cardNumber",
+            "required": true,
+            "type": "string",
+            "x-example": "12345678"
+          },
+          {
+            "name": "preferredAuth",
+            "in": "query",
+            "description": "preferredAuth",
+            "required": true,
+            "type": "string",
+            "allowEmptyValue": false,
+            "enum": [
+              "PIN",
+              "FINGERPRINT"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "deprecated": false
+      }
+    },
+    "/api/card/{cardNumber}/validate": {
       "post": {
         "tags": [
           "bank-account-controller"
@@ -188,11 +245,10 @@
         "parameters": [
           {
             "name": "cardNumber",
-            "in": "query",
+            "in": "path",
             "description": "cardNumber",
             "required": true,
             "type": "string",
-            "allowEmptyValue": false,
             "x-example": "12345678"
           },
           {
@@ -242,13 +298,13 @@
         "deprecated": false
       }
     },
-    "/api/account/card/withdraw": {
-      "post": {
+    "/api/card/{cardNumber}/withdraw": {
+      "put": {
         "tags": [
           "bank-account-controller"
         ],
         "summary": "Withdraw money for given card number",
-        "operationId": "withdrawCardBalanceUsingPOST",
+        "operationId": "withdrawCardBalanceUsingPUT",
         "consumes": [
           "application/json"
         ],
@@ -267,11 +323,10 @@
           },
           {
             "name": "cardNumber",
-            "in": "query",
+            "in": "path",
             "description": "cardNumber",
             "required": true,
             "type": "string",
-            "allowEmptyValue": false,
             "x-example": "12345678"
           }
         ],

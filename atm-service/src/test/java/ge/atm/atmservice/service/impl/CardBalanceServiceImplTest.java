@@ -51,14 +51,14 @@ class CardBalanceServiceImplTest {
     void depositCardBalance() {
         // Given
         doReturn(new JwtCardDetails("1234", CardDto.PreferredAuthEnum.PIN, null)).when(authenticatedCardService).getAuthenticatedCard();
-        doReturn(BigDecimal.TEN).when(bankAccountControllerApi).depositCardBalanceUsingPOST(any(), any());
+        doReturn(BigDecimal.TEN).when(bankAccountControllerApi).depositCardBalanceUsingPUT(any(), any());
 
         // When
         final BigDecimal result = cardBalanceService.depositCardBalance(BigDecimal.ONE);
 
         // Then
         verify(authenticatedCardService, times(1)).getAuthenticatedCard();
-        verify(bankAccountControllerApi, times(1)).depositCardBalanceUsingPOST(any(), any());
+        verify(bankAccountControllerApi, times(1)).depositCardBalanceUsingPUT(any(), any());
         Assertions.assertNotNull(result);
         Assertions.assertEquals(BigDecimal.TEN, result);
     }
@@ -67,14 +67,14 @@ class CardBalanceServiceImplTest {
     void withdrawCardBalance() {
         // Given
         doReturn(new JwtCardDetails("1234", CardDto.PreferredAuthEnum.PIN, null)).when(authenticatedCardService).getAuthenticatedCard();
-        doReturn(BigDecimal.TEN).when(bankAccountControllerApi).withdrawCardBalanceUsingPOST(any(), any());
+        doReturn(BigDecimal.TEN).when(bankAccountControllerApi).withdrawCardBalanceUsingPUT(any(), any());
 
         // When
         final BigDecimal result = cardBalanceService.withdrawCardBalance(BigDecimal.ONE);
 
         // Then
         verify(authenticatedCardService, times(1)).getAuthenticatedCard();
-        verify(bankAccountControllerApi, times(1)).withdrawCardBalanceUsingPOST(any(), any());
+        verify(bankAccountControllerApi, times(1)).withdrawCardBalanceUsingPUT(any(), any());
         Assertions.assertNotNull(result);
         Assertions.assertEquals(BigDecimal.TEN, result);
     }

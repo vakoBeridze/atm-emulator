@@ -2,6 +2,7 @@ package ge.atm.atmservice.api;
 
 import ge.atm.atmservice.service.AuthenticationService;
 import ge.atm.atmservice.service.CardBalanceService;
+import ge.atm.atmservice.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,9 @@ public abstract class BaseControllerTest {
 
 	@MockBean
 	protected CardBalanceService cardBalanceService;
+
+	@MockBean
+	protected CardService cardService;
 
 	@Autowired
 	protected MockMvc mockMvc;

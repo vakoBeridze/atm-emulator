@@ -5,4 +5,6 @@ import ge.atm.bankservice.domain.dto.CardDto;
 public interface CardService {
 
     CardDto getCard(String cardNumber);
+
+    void updatePreferredAuth(CardDto.PreferredAuthEnum preferredAuth);
 }
