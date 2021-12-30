@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "e28cf091-61bc-4f53-bd7d-a7a3e16bfd99",
+		"name": "ATM Emulator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "authentication init",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cardNumber\": \"1111222233334444\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ATM_SERVICE_URL}}/api/authentication/initiate",
+					"host": [
+						"{{ATM_SERVICE_URL}}"
+					],
+					"path": [
+						"api",
+						"authentication",
+						"initiate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authentication finalize",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMTExMjIyMjMzMzM0NDQ0IiwicHJlZmVycmVkX2F1dGgiOiJGSU5HRVJQUklOVCIsInJvbGVzIjpbXSwiaWF0IjoxNjQwODk2NjY1LCJleHAiOjE2NDA4OTc4NjV9.yh0nDXjxyVa6kBFAAcokLu7LORflNmaOUxvCcD4kmELgJcA2ijQldWEHiboWxDnhzRcK4wyx4MGEymu0wFSI5A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cardNumber\": \"1111222233334444\",\n    \"secret\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ATM_SERVICE_URL}}/api/authentication/finalize",
+					"host": [
+						"{{ATM_SERVICE_URL}}"
+					],
+					"path": [
+						"api",
+						"authentication",
+						"finalize"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change preffered auth",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{ATM_SERVICE_URL}}/api/card/preferred-auth?preferredAuth=PIN",
+					"host": [
+						"{{ATM_SERVICE_URL}}"
+					],
+					"path": [
+						"api",
+						"card",
+						"preferred-auth"
+					],
+					"query": [
+						{
+							"key": "preferredAuth",
+							"value": "PIN"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check balance",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cardNumber\": \"12345678\",\n    \"secret\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ATM_SERVICE_URL}}/api/balance",
+					"host": [
+						"{{ATM_SERVICE_URL}}"
+					],
+					"path": [
+						"api",
+						"balance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "balance deposit",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{ATM_SERVICE_URL}}/api/balance/deposit?amount=10.01",
+					"host": [
+						"{{ATM_SERVICE_URL}}"
+					],
+					"path": [
+						"api",
+						"balance",
+						"deposit"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "10.01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "balance withdraw ",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{ATM_SERVICE_URL}}/api/balance/withdraw?amount=2.02",
+					"host": [
+						"{{ATM_SERVICE_URL}}"
+					],
+					"path": [
+						"api",
+						"balance",
+						"withdraw"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "2.02"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMTExMjIyMjMzMzM0NDQ0IiwicHJlZmVycmVkX2F1dGgiOiJGSU5HRVJQUklOVCIsInJvbGVzIjpbIkZJTkFMSVpFRF9BVVRIRU5USUNBVElPTiJdLCJpYXQiOjE2NDA4OTY4OTcsImV4cCI6MTY0MDg5ODA5N30.Pe3pZ8DsV7sxIpju8Dv5e12Xl5Do0ez0_7LTUk8IRJ7czR-h8MiZ_RmzVBov2fTgY-TfjSG6WiNVF13zopyC4Q",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -2,14 +2,14 @@
 
 ## Overview
 
-- Solution has two services and one database modules:
-  - `bank-service` provides bank services: Cash deposit, Cash withdrawal, Check balance, ...
-  - `atm-service` simple client for bank-service.
-  - `atm-db` postgres database docker image.
+- Solution has two services and one database module:
+    - `bank-service` provides bank services: Cash deposit, Cash withdrawal, Check balance, etc.
+    - `atm-service` simple client for bank-service.
+    - `atm-db` postgres database docker image.
 - To access `atm-service` two-step authentication is needed, finally `atm-service` generates limited time access token.
-  - `/api/authentication/initiate` method checks if card is valid and generates access token which is valid only for accessing finalize method.
-  - `/api/authentication/finalize` method validates card preferred authentication method (PIN, fingerprint etc.), and generates access token which is valid for accessing rest of the atm services.
-  - After finalizing authentication JWT token payload looks like:
+    - `/api/authentication/initiate` method checks if card is valid and generates access token which is valid only for accessing finalize method.
+    - `/api/authentication/finalize` method validates card preferred authentication method (PIN, fingerprint etc.), and generates access token which is valid for accessing rest of the atm services.
+    - After finalizing authentication JWT token payload looks like:
   ```json
   {
     "sub": "1111222233334444",
@@ -39,4 +39,4 @@ docker-compose up
 - Otherwise, apps can be started using java. (postgres database is required as well)
 - Access `atm-service` swagger at: http://localhost:8080/swagger-ui.html
 - Access `bank-service` swagger at: http://localhost:8090/swagger-ui.html
-
+- Postman can be also used to test some endpoints. See ready to use postman collection in source files. `ATM Emulator.postman_collection.json`
