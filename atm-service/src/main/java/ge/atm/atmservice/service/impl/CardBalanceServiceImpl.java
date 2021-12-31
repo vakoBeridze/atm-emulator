@@ -3,6 +3,7 @@ package ge.atm.atmservice.service.impl;
 import ge.atm.atmservice.service.AuthenticatedCardService;
 import ge.atm.atmservice.service.CardBalanceService;
 import ge.atm.bankservice.api.BankAccountControllerApi;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+
+import static ge.atm.atmservice.config.Resilience4jConfig.BANK_SERVICE;
 
 @Slf4j
 @AllArgsConstructor
@@ -19,6 +22,7 @@ public class CardBalanceServiceImpl implements CardBalanceService {
     private final AuthenticatedCardService authenticatedCardService;
     private final BankAccountControllerApi bankAccountControllerApi;
 
+    @CircuitBreaker(name = BANK_SERVICE)
     @Override
     public BigDecimal getCurrentBalance() {
         final String cardNumber = authenticatedCardService.getAuthenticatedCard().getCardNumber();
@@ -31,6 +35,7 @@ public class CardBalanceServiceImpl implements CardBalanceService {
         }
     }
 
+    @CircuitBreaker(name = BANK_SERVICE)
     @Override
     public BigDecimal depositCardBalance(BigDecimal amount) {
         final String cardNumber = authenticatedCardService.getAuthenticatedCard().getCardNumber();
@@ -43,6 +48,7 @@ public class CardBalanceServiceImpl implements CardBalanceService {
         }
     }
 
+    @CircuitBreaker(name = BANK_SERVICE)
     @Override
     public BigDecimal withdrawCardBalance(BigDecimal amount) {
         final String cardNumber = authenticatedCardService.getAuthenticatedCard().getCardNumber();

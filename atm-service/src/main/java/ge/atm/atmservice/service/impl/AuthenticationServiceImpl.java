@@ -8,6 +8,8 @@ import ge.atm.atmservice.service.AuthenticatedCardService;
 import ge.atm.atmservice.service.AuthenticationService;
 import ge.atm.bankservice.api.BankAccountControllerApi;
 import ge.atm.bankservice.domain.dto.CardDto;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
+
+import static ge.atm.atmservice.config.Resilience4jConfig.BANK_SERVICE;
 
 @Slf4j
 @AllArgsConstructor
@@ -28,6 +32,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticatedCardService authenticatedCardService;
     private final BankAccountControllerApi bankAccountControllerApi;
 
+    @CircuitBreaker(name = BANK_SERVICE)
+    @RateLimiter(name = BANK_SERVICE)
+    @Override
     public AuthenticationResponse initiateAuthentication(AuthenticationRequest request) {
         log.debug("Initiate authentication with card number: {}", request.getCardNumber());
         final Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getCardNumber(), null));
@@ -36,6 +43,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return buildResponse(accessToken, request.getCardNumber(), preferredAuth);
     }
 
+    @CircuitBreaker(name = BANK_SERVICE)
+    @Override
     public AuthenticationResponse finalizeAuthentication(AuthenticationRequest request) {
         log.debug("Finalise authentication for card number: {}", request.getCardNumber());
         final JwtCardDetails authenticatedCard = authenticatedCardService.getAuthenticatedCard();

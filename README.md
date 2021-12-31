@@ -25,6 +25,7 @@
 - `bank-service` automatically creates database schema and loads some sample data. There are about three main tables:
   ![schema.png](./bank-service/src/main/resources/db/schema.png)
 - `Hibernate envers` is used for auditing.
+- `resilience4j` is used for circuit breaking and rate limiting.
 - Both of the services have swagger ui configured and can be accessed at `/swagger-ui/index.html`
 - Logging can be configured by setting `LOG_LEVEL` env variable.
 

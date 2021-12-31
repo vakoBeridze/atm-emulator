@@ -20,3 +20,40 @@ bank-service:
   base-path: ${BANK_SERIVCE_URL:http://localhost:8090}
   auth-token-header-name: X-API-KEY
   auth-token: ${BANK_SERIVCE_API_KEY:some-long-api-key}
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      slidingWindowSize: 10
+      minimumNumberOfCalls: 3
+      permittedNumberOfCallsInHalfOpenState: 2
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 20s
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 10
+  instances:
+    bankService:
+      baseConfig: default
+      waitDurationInOpenState: 5000
+
+resilience4j.ratelimiter:
+  configs:
+    default:
+      registerHealthIndicator: false
+      limitForPeriod: 10
+      limitRefreshPeriod: 1s
+      timeoutDuration: 0
+      eventConsumerBufferSize: 100
+  instances:
+    bankService:
+      baseConfig: default

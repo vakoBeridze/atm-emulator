@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.2'
+    id 'org.springframework.boot' version '2.5.8'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'idea'
@@ -20,6 +20,9 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation "io.github.resilience4j:resilience4j-spring-boot2:1.7.1"
     implementation "io.springfox:springfox-boot-starter:3.0.0"
     compileOnly "io.springfox:springfox-swagger-ui:3.0.0"
     swaggerCodegen 'io.swagger:swagger-codegen-cli:2.4.25' // Swagger Codegen V2
