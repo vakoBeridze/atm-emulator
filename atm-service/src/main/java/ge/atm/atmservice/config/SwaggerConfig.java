@@ -32,7 +32,6 @@ public class SwaggerConfig {
                 .build();
     }
 
-
     private ApiKey apiKey() {
         return new ApiKey("Api key", AUTHORIZATION_HEADER, "header");
     }

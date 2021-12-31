@@ -60,8 +60,7 @@
           {
             "JWT": []
           }
-        ],
-        "deprecated": false
+        ]
       }
     },
     "/api/card/{cardNumber}/balance": {
@@ -105,8 +104,7 @@
           {
             "JWT": []
           }
-        ],
-        "deprecated": false
+        ]
       }
     },
     "/api/card/{cardNumber}/deposit": {
@@ -129,7 +127,6 @@
             "description": "amount",
             "required": true,
             "type": "number",
-            "allowEmptyValue": false,
             "x-example": 22.12
           },
           {
@@ -165,8 +162,7 @@
           {
             "JWT": []
           }
-        ],
-        "deprecated": false
+        ]
       }
     },
     "/api/card/{cardNumber}/preferred-auth": {
@@ -197,10 +193,9 @@
             "description": "preferredAuth",
             "required": true,
             "type": "string",
-            "allowEmptyValue": false,
             "enum": [
-              "PIN",
-              "FINGERPRINT"
+              "FINGERPRINT",
+              "PIN"
             ]
           }
         ],
@@ -225,8 +220,7 @@
           {
             "JWT": []
           }
-        ],
-        "deprecated": false
+        ]
       }
     },
     "/api/card/{cardNumber}/validate": {
@@ -257,10 +251,9 @@
             "description": "preferredAuth",
             "required": true,
             "type": "string",
-            "allowEmptyValue": false,
             "enum": [
-              "PIN",
-              "FINGERPRINT"
+              "FINGERPRINT",
+              "PIN"
             ]
           },
           {
@@ -269,7 +262,6 @@
             "description": "secret",
             "required": true,
             "type": "string",
-            "allowEmptyValue": false,
             "x-example": "1234"
           }
         ],
@@ -294,8 +286,7 @@
           {
             "JWT": []
           }
-        ],
-        "deprecated": false
+        ]
       }
     },
     "/api/card/{cardNumber}/withdraw": {
@@ -318,7 +309,6 @@
             "description": "amount",
             "required": true,
             "type": "number",
-            "allowEmptyValue": false,
             "x-example": 11.2
           },
           {
@@ -354,8 +344,7 @@
           {
             "JWT": []
           }
-        ],
-        "deprecated": false
+        ]
       }
     }
   },
@@ -383,8 +372,8 @@
         "preferredAuth": {
           "type": "string",
           "enum": [
-            "PIN",
-            "FINGERPRINT"
+            "FINGERPRINT",
+            "PIN"
           ]
         }
       },

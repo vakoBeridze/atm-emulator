@@ -20,8 +20,8 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'io.springfox:springfox-swagger2:2.9.2'
-    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+    implementation "io.springfox:springfox-boot-starter:3.0.0"
+    compileOnly "io.springfox:springfox-swagger-ui:3.0.0"
     swaggerCodegen 'io.swagger:swagger-codegen-cli:2.4.25' // Swagger Codegen V2
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
