@@ -25,7 +25,7 @@
 - `bank-service` automatically creates database schema and loads some sample data. There are about three main tables:
   ![schema.png](./bank-service/src/main/resources/db/schema.png)
 - `Hibernate envers` is used for auditing.
-- Both of the services have swagger ui configured and can be accessed at `/swagger-ui.html`
+- Both of the services have swagger ui configured and can be accessed at `/swagger-ui/index.html`
 - Logging can be configured by setting `LOG_LEVEL` env variable.
 
 ## Start ATM Emulator
@@ -37,6 +37,6 @@ docker-compose up
 ```
 
 - Otherwise, apps can be started using java. (postgres database is required as well)
-- Access `atm-service` swagger at: http://localhost:8080/swagger-ui.html
-- Access `bank-service` swagger at: http://localhost:8090/swagger-ui.html
+- Access `atm-service` swagger at: http://localhost:8080/swagger-ui/index.html
+- Access `bank-service` swagger at: http://localhost:8090/swagger-ui/index.html
 - Postman can be also used to test some endpoints. See ready to use postman collection in source files. `ATM Emulator.postman_collection.json`
